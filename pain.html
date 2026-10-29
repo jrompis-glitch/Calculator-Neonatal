@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17365d">
+<title>PAIN | JR Neonatal Care</title>
+<style>
+:root{--navy:#17365d;--blue:#4472c4;--pale:#eaf4f8;--line:#d8e2eb;--ink:#172435;--muted:#65758a;--yellow:#fff2cc;--green:#e2f0d9;--white:#fff;--bg:#f3f6fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,#17365d,#24558b);color:#fff;padding:22px 18px 20px}
+.wrap{max-width:920px;margin:auto}.brand{font-size:clamp(18px,3vw,25px);font-weight:800;letter-spacing:.2px}.subtitle{opacity:.85;font-size:13px;margin-top:5px}
+main{max-width:920px;margin:18px auto;padding:0 14px 40px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px #17365d0b;overflow:hidden;margin-bottom:16px}
+.card-head{background:var(--navy);color:white;font-weight:800;padding:12px 16px}.card-body{padding:16px}
+.mode-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;text-align:left;cursor:pointer;color:var(--ink);font:inherit}.mode strong{display:block;font-size:16px}.mode span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.mode.active{border:2px solid var(--blue);background:#edf4ff}
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label,.item label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}.field input,.field select,.item select{width:100%;min-height:44px;border:1px solid #bdcbd8;border-radius:9px;background:#fff;padding:10px 11px;font:inherit;color:var(--ink)}
+.field input:focus,.field select:focus,.item select:focus{outline:3px solid #4472c433;border-color:var(--blue)}
+.helper{font-size:12px;color:var(--muted);margin-top:6px}
+.section-title{font-weight:800;margin:0 0 12px}
+.item-list{display:grid;gap:12px}.item{display:grid;grid-template-columns:minmax(130px,.75fr) minmax(0,1.5fr) 72px;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px}.item .name{font-weight:700;font-size:14px}.score{border-radius:9px;background:var(--green);min-height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.results{display:grid;grid-template-columns:1fr;gap:10px}.result{background:var(--pale);border:1px solid #d4e4ed;border-radius:12px;padding:13px 14px}.result .label{font-size:12px;font-weight:800;color:#36516c;text-transform:uppercase;letter-spacing:.3px}.result .value{font-size:17px;font-weight:800;margin-top:5px}.result .detail{font-size:14px;line-height:1.5;margin-top:5px}.result.total .value{font-size:30px;color:var(--navy)}
+.note{font-size:12px;color:var(--muted);line-height:1.55}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}.btn-primary{background:var(--blue);color:white}.btn-secondary{background:#e8eef5;color:var(--navy)}
+.hidden{display:none!important}footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 16px 24px}
+@media(max-width:600px){.field-grid{grid-template-columns:1fr}.item{grid-template-columns:1fr 68px;gap:8px}.item .name{grid-column:1/-1}.item select{grid-column:1}.score{grid-column:2;grid-row:2}.mode-wrap{gap:8px}.mode{padding:12px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">JR NEONATAL CARE | NEONATAL CLINICAL CALCULATOR</div><div class="subtitle">PAIN • Kalkulator nyeri neonatal</div></div></header>
+<main>
+  <section class="card">
+    <div class="card-head">MENU KALKULATOR PAIN</div>
+    <div class="card-body">
+      <p class="section-title">Pilih instrumen penilaian</p>
+      <div class="mode-wrap" role="group" aria-label="Pilih instrumen">
+        <button class="mode active" id="pick-npass" type="button" aria-pressed="true"><strong>N-PASS</strong><span>Skoring nyeri neonatal untuk bayi sakit di NICU</span></button>
+        <button class="mode" id="pick-nips" type="button" aria-pressed="false"><strong>NIPS</strong><span>Skoring nyeri neonatal pada bayi yang dilakukan tindakan prosedural</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="npass-data">
+    <div class="card-head">DATA BAYI — N-PASS</div>
+    <div class="card-body">
+      <div class="field-grid">
+        <div class="field"><label for="gaBirth">Usia gestasi saat lahir (minggu)</label><input id="gaBirth" type="number" min="20" max="44" step="0.1" placeholder="Contoh: 28"></div>
+        <div class="field"><label for="chronAge">Usia kronologis (minggu)</label><input id="chronAge" type="number" min="0" max="104" step="0.1" placeholder="Contoh: 4"></div>
+        <div class="field"><label for="gaCorrected">Usia gestasi terkoreksi (minggu)</label><input id="gaCorrected" type="text" readonly placeholder="Terhitung otomatis"></div>
+      </div>
+      <p class="helper">Usia gestasi terkoreksi = usia gestasi saat lahir + usia kronologis.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" id="assessment-title">PENILAIAN KOMPONEN N-PASS</div>
+    <div class="card-body">
+      <div class="item-list" id="assessment-list"></div>
+      <div class="actions"><button class="btn btn-secondary" id="reset" type="button">Reset penilaian</button></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">HASIL OTOMATIS</div>
+    <div class="card-body"><div class="results" id="results" aria-live="polite"></div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">PENGINGAT KLINIS</div>
+    <div class="card-body note" id="clinical-note"></div>
+  </section>
+  <footer>JR Neonatal Care • Produced by Johnny Rompis<br>Alat bantu klinis; gunakan formulir tervalidasi dan protokol unit sebagai acuan.</footer>
+</main>
+<script>
+const instruments = {
+  npass: {
+    title: "PENILAIAN KOMPONEN N-PASS",
+    items: [
+      {name:"Menangis / iritabilitas", options:[["Tidak ada tangisan/iritabilitas",0],["Merintih atau mudah ditenangkan",1],["Tangisan melengking/tidak dapat ditenangkan",2]]},
+      {name:"Keadaan perilaku", options:[["Tidur tenang/sesuai keadaan",0],["Gelisah atau mudah terbangun",1],["Terus terjaga atau agitasi",2]]},
+      {name:"Ekspresi wajah", options:[["Wajah relaks",0],["Meringis sesekali",1],["Meringis terus-menerus",2]]},
+      {name:"Tonus ekstremitas", options:[["Ekstremitas relaks",0],["Fleksi/ekstensi sesekali",1],["Fleksi/ekstensi kaku atau kuat",2]]},
+      {name:"Tanda vital", options:[["Tanda vital stabil dari nilai dasar",0],["Perubahan ringan dibanding nilai dasar",1],["Perubahan nyata dibanding nilai dasar",2]]}
+    ],
+    note:"N-PASS menilai indikator nyeri/agitas. Algoritme ringkas ini mengikuti pilihan skoring pada kalkulator JR Neonatal Care; pastikan interpretasi dan koreksi prematuritas sesuai formulir N-PASS tervalidasi serta protokol unit. Skor nyeri dan sedasi merupakan penilaian terpisah."
+  },
+  nips: {
+    title: "PENILAIAN KOMPONEN NIPS",
+    items: [
+      {name:"Ekspresi wajah", options:[["Rileks / tidak ada grimace",0],["Meringis",1]]},
+      {name:"Menangis", options:[["Tidak menangis",0],["Merengek / menangis ringan",1],["Menangis kuat",2]]},
+      {name:"Pola napas", options:[["Pola napas rileks",0],["Perubahan pola napas",1]]},
+      {name:"Lengan", options:[["Rileks",0],["Fleksi / ekstensi",1]]},
+      {name:"Kaki", options:[["Rileks",0],["Fleksi / ekstensi",1]]},
+      {name:"Keadaan terjaga", options:[["Tidur / tenang",0],["Gelisah / terjaga",1]]}
+    ],
+    note:"NIPS menilai enam indikator dengan skor total 0–7 dan tidak memakai koreksi prematuritas. Ambang dan tindakan dapat berbeda menurut protokol unit; nilai respons bayi sebelum dan sesudah intervensi."
+  }
+};
+let current = "npass";
+const list = document.getElementById("assessment-list");
+const results = document.getElementById("results");
+const gaBirth = document.getElementById("gaBirth");
+const chronAge = document.getElementById("chronAge");
+const gaCorrected = document.getElementById("gaCorrected");
+
+function selectInstrument(key) {
+  current = key;
+  document.getElementById("pick-npass").classList.toggle("active", key==="npass");
+  document.getElementById("pick-nips").classList.toggle("active", key==="nips");
+  document.getElementById("pick-npass").setAttribute("aria-pressed", key==="npass");
+  document.getElementById("pick-nips").setAttribute("aria-pressed", key==="nips");
+  document.getElementById("npass-data").classList.toggle("hidden", key!=="npass");
+  document.getElementById("assessment-title").textContent = instruments[key].title;
+  document.getElementById("clinical-note").textContent = instruments[key].note;
+  renderItems();
+  calculate();
+}
+function renderItems() {
+  list.innerHTML = "";
+  instruments[current].items.forEach((item, i) => {
+    const row = document.createElement("div"); row.className="item";
+    const name = document.createElement("div"); name.className="name"; name.textContent=item.name;
+    const select = document.createElement("select"); select.id=`score-${i}`; select.setAttribute("aria-label",item.name);
+    const blank = document.createElement("option"); blank.value=""; blank.textContent="Pilih kriteria penilaian"; select.appendChild(blank);
+    item.options.forEach(([label,score]) => { const opt=document.createElement("option"); opt.value=String(score); opt.textContent=label; select.appendChild(opt); });
+    select.addEventListener("change", calculate);
+    const score = document.createElement("div"); score.className="score"; score.id=`shown-${i}`; score.textContent="—";
+    row.append(name,select,score); list.appendChild(row);
+  });
+}
+function correctedGA() {
+  const b=gaBirth.value===""?NaN:Number(gaBirth.value), c=chronAge.value===""?NaN:Number(chronAge.value);
+  if(Number.isFinite(b)&&Number.isFinite(c)&&b>0&&c>=0) { const x=Math.round((b+c)*10)/10; gaCorrected.value=x.toFixed(1); return x; }
+  gaCorrected.value=""; return NaN;
+}
+function resultBox(label,value,detail="",total=false) {
+  const box=document.createElement("div"); box.className="result"+(total?" total":"");
+  const l=document.createElement("div"); l.className="label"; l.textContent=label;
+  const v=document.createElement("div"); v.className="value"; v.textContent=value;
+  box.append(l,v);
+  if(detail){const d=document.createElement("div");d.className="detail";d.textContent=detail;box.appendChild(d);}
+  results.appendChild(box);
+}
+function calculate() {
+  const config=instruments[current], scores=[];
+  config.items.forEach((item,i)=>{const el=document.getElementById(`score-${i}`); const val=el?el.value:""; const shown=document.getElementById(`shown-${i}`); if(shown)shown.textContent=val===""?"—":val; scores.push(val===""?null:Number(val));});
+  results.innerHTML="";
+  if(current==="npass") {
+    const ga=correctedGA();
+    const complete=scores.every(v=>v!==null);
+    const base=scores.reduce((a,v)=>a+(v===null?0:v),0);
+    let correction=null;
+    if(Number.isFinite(ga)) correction=ga<28?3:ga<32?2:ga<35?1:0;
+    resultBox("Total skor dasar (0–10)",complete?String(base):`${scores.filter(v=>v!==null).length}/5 komponen`,complete?"Jumlah skor lima komponen N-PASS.":"Lengkapi seluruh pilihan penilaian.",true);
+    resultBox("Koreksi prematuritas",correction===null?"Masukkan kedua usia":`+${correction}`,correction===null?"Isi usia gestasi saat lahir dan usia kronologis.":`Berdasarkan usia gestasi terkoreksi ${ga.toFixed(1)} minggu.`);
+    if(complete&&correction!==null) {
+      const total=base+correction;
+      let interpretation;
+      if(total===0) interpretation="Skor 0: tidak ada tanda nyeri/agitas berdasarkan komponen yang dinilai.";
+      else if(total<=2) interpretation="Skor 1–2: tanda nyeri/agitas ringan; evaluasi klinis.";
+      else if(total<=4) interpretation="Skor 3–4: tanda nyeri/agitas bermakna; evaluasi penyebab dan intervensi sesuai protokol.";
+      else interpretation="Skor ≥5: tanda nyeri/agitas tinggi; evaluasi segera dan tata laksana sesuai protokol unit.";
+      resultBox("Total skor nyeri N-PASS",String(total),interpretation,true);
+    } else resultBox("Total skor nyeri N-PASS","Menunggu data","Lengkapi seluruh komponen dan usia gestasi.",true);
+  } else {
+    const complete=scores.every(v=>v!==null);
+    const total=scores.reduce((a,v)=>a+(v===null?0:v),0);
+    resultBox("Total skor NIPS (0–7)",complete?String(total):`${scores.filter(v=>v!==null).length}/6 komponen`,complete?"Jumlah skor enam komponen NIPS.":"Lengkapi seluruh pilihan penilaian.",true);
+    if(complete) {
+      const interpretation=total<=2?"0–2: Tidak ada atau nyeri minimal":total<=4?"3–4: Nyeri ringan hingga sedang":"5–7: Nyeri berat";
+      const action=total<=2?"Lanjutkan pemantauan dan upayakan kenyamanan bayi.":total<=4?"Pertimbangkan tindakan nonfarmakologis, seperti facilitated tucking, kontak kulit ke kulit, menyusui, atau sukrosa oral sesuai protokol.":"Segera lakukan intervensi nyeri sesuai penyebab dan jenis prosedur; pertimbangkan analgesia bila terindikasi.";
+      resultBox("Interpretasi skor",interpretation);
+      resultBox("Tindakan berdasarkan hasil",action);
+    } else {
+      resultBox("Interpretasi skor","Menunggu data","Lengkapi keenam komponen.");
+      resultBox("Tindakan berdasarkan hasil","—","Hasil tindakan akan muncul setelah semua komponen diisi.");
+    }
+  }
+}
+document.getElementById("pick-npass").addEventListener("click",()=>selectInstrument("npass"));
+document.getElementById("pick-nips").addEventListener("click",()=>selectInstrument("nips"));
+document.getElementById("reset").addEventListener("click",()=>{renderItems();calculate();});
+gaBirth.addEventListener("input",calculate); chronAge.addEventListener("input",calculate);
+selectInstrument("npass");
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10263f">
+<title>Modified Finnegan NAS | JR Neonatal Care</title>
+<style>
+:root{--navy:#10263f;--navy2:#183957;--teal:#0d9488;--bg:#f3f7fb;--ink:#18283a;--muted:#62748a;--line:#dce5ee;--white:#fff;--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(125deg,var(--navy),var(--navy2));color:white;padding:22px 18px 26px}
+.wrap{max-width:1100px;margin:auto} .brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#e6fffb;color:#0f766e;display:grid;place-items:center;font-weight:900;font-size:17px;letter-spacing:-1px}
+h1{font-size:clamp(22px,4vw,32px);line-height:1.15;margin:0 0 5px}header p{margin:0;color:#d4e2ef;font-size:13px}
+main{max-width:1100px;margin:20px auto;padding:0 14px 40px}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid var(--line);background:white;color:var(--navy);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 4px 18px #132b4308}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.field{grid-column:span 4}.field.wide{grid-column:span 6}.field.full{grid-column:1/-1}
+label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #cbd7e3;border-radius:10px;background:#fff;color:var(--ink);font:inherit;min-height:42px}input:focus,select:focus{outline:2px solid #99f6e4;border-color:var(--teal)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px}.section-head h2{font-size:18px;margin:0;color:var(--navy)}.hint{font-size:12px;color:var(--muted)}
+.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:8px}.item-top{display:flex;align-items:flex-start;gap:8px}.num{background:#e5eef7;color:#23445f;font-size:11px;font-weight:900;border-radius:7px;padding:4px 6px;min-width:25px;text-align:center}.item-title{font-weight:700;font-size:14px;flex:1}.item select{min-height:38px;padding:8px;font-size:13px}
+.scorebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.score-num{font-size:34px;font-weight:900;line-height:1;color:var(--navy)}.score-card{display:flex;align-items:center;gap:12px}.status{padding:7px 11px;border-radius:999px;font-size:12px;font-weight:900}.status.green{background:var(--green);color:#166534}.status.amber{background:var(--amber);color:#92400e}.status.red{background:var(--red);color:#991b1b}
+button{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--teal);color:white}.secondary{background:#e8eef5;color:var(--navy)}.danger{background:#fee2e2;color:#991b1b}.actions{display:flex;gap:8px;flex-wrap:wrap}.history-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{background:#f5f8fb;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}.empty{color:var(--muted);padding:16px;text-align:center}.hidden{display:none!important}.notice{background:#f0fdfa;border:1px solid #99f6e4;border-radius:12px;padding:12px;color:#115e59;font-size:13px}.warning{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px;color:#9a3412;font-size:13px}.guide h3{margin:14px 0 5px;color:var(--navy);font-size:15px}.guide p,.guide li{font-size:14px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:10px}
+@media(max-width:680px){.field,.field.wide{grid-column:span 12}.items{grid-template-columns:1fr}.panel{padding:14px}main{padding:0 10px 28px}.score-num{font-size:30px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand"><div class="logo">JR</div><div><h1>Modified Finnegan NAS</h1><p>JR Neonatal Care · Neonatal Clinical Calculator</p></div></div>
+  <p style="margin-top:15px">Skoring gejala putus zat pada neonatus.</p>
+</div></header>
+<main>
+  <div class="nav"><a class="tab" href="./index.html" style="text-decoration:none">← Neonatal Clinical Calculator</a>
+    <button class="tab active" data-tab="assessment">Penilaian</button>
+    <button class="tab" data-tab="history">Riwayat Serial</button>
+    <button class="tab" data-tab="guide">Panduan & Referensi</button>
+  </div>
+  <section id="assessment">
+    <div class="panel">
+      <div class="section-head"><h2>Informasi pemeriksaan</h2><span class="hint">Tidak memerlukan ID pasien</span></div>
+      <div class="grid">
+        <div class="field wide"><label for="caseLabel">Label lokal / inisial (opsional)</label><input id="caseLabel" placeholder="Contoh: Bayi A / ruang NICU"></div>
+        <div class="field"><label for="assessTime">Waktu penilaian</label><input id="assessTime" type="datetime-local"></div>
+        <div class="field"><label for="assessor">Penilai (opsional)</label><input id="assessor" placeholder="Nama / inisial petugas"></div>
+        <div class="field"><label for="interval">Penilaian ke-</label><select id="interval"></select></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="section-head"><h2>Item Modified Finnegan</h2><span class="hint">Pilih skor sesuai manifestasi klinis</span></div>
+      <div class="notice" style="margin-bottom:12px">Pilih skor untuk setiap item yang dinilai. Gunakan versi instrumen dan definisi operasional yang disahkan di unit Anda; daftar/penjumlahan ini merupakan alat bantu dan perlu diverifikasi terhadap formulir lokal.</div>
+      <div id="items" class="items"></div>
+    </div>
+    <div class="panel">
+      <div class="scorebar">
+        <div class="score-card"><div><div class="hint">SKOR TOTAL</div><div class="score-num" id="total">0</div></div><div><div id="status" class="status green">Belum ada skor</div><div id="interpretation" class="hint" style="margin-top:6px">Pilih item untuk menghitung skor.</div></div></div>
+        <div class="actions"><button class="secondary" id="reset">Kosongkan</button><button class="primary" id="save">Simpan penilaian</button></div>
+      </div>
+    </div>
+    <div class="panel" id="clinicalPanel">
+      <div class="section-head"><h2>Situasi klinis & pendekatan awal</h2><span class="hint">Berdasarkan skor dan item yang dipilih</span></div>
+      <div class="grid">
+        <div class="field wide"><label>Klasifikasi skor saat ini</label><div id="clinicalClass" style="font-weight:800;color:#10263f">Belum dapat diklasifikasikan</div></div>
+        <div class="field wide"><label>Kelompok gejala yang teridentifikasi</label><div id="symptomGroups" class="hint">Pilih skor pada item untuk melihat kelompok gejala.</div></div>
+        <div class="field full"><label>Situasi klinis yang perlu dipertimbangkan</label><div id="clinicalSituation">Lengkapi penilaian item untuk menghasilkan ringkasan.</div></div>
+        <div class="field full"><label>Pendekatan yang disarankan</label><div id="clinicalAction">Penilaian serial, perawatan suportif, dan evaluasi klinis sesuai protokol NICU.</div></div>
+      </div>
+    </div>
+    <div class="warning">Penilaian dilakukan secara serial, umumnya setiap 3–4 jam, sesuai protokol rumah sakit. Skor Finnegan terutama digunakan pada bayi dengan dugaan neonatal opioid withdrawal syndrome (NOWS); skor ini tidak menggantikan evaluasi penyebab lain dari gejala serupa, seperti sepsis, hipoglikemia, atau gangguan neurologis.</div>
+    <div class="warning" style="margin-top:12px">Klasifikasi ini merupakan ringkasan bantu, bukan diagnosis otomatis. Gejala berat seperti kejang, gangguan napas, penurunan kesadaran, dehidrasi, atau tidak mampu menyusu memerlukan evaluasi segera tanpa menunggu skor total.</div>
+  </section>
+  <section id="history" class="hidden">
+    <div class="panel">
+      <div class="section-head"><h2>Riwayat penilaian serial</h2><div class="actions"><button class="secondary" id="export">Ekspor CSV</button><button class="danger" id="clearHistory">Hapus semua</button></div></div>
+      <div class="hint" style="margin-bottom:12px">Data tersimpan di penyimpanan lokal browser perangkat ini. Data tidak otomatis tersinkron antarperangkat.</div>
+      <div class="history-wrap"><table><thead><tr><th>Waktu</th><th>Label</th><th>Penilaian</th><th>Skor</th><th>Interpretasi</th><th>Penilai</th><th>Aksi</th></tr></thead><tbody id="historyRows"></tbody></table><div id="emptyHistory" class="empty">Belum ada penilaian tersimpan.</div></div>
+    </div>
+  </section>
+  <section id="guide" class="hidden">
+    <div class="panel guide">
+      <h2 style="margin-top:0;color:var(--navy)">Panduan penggunaan</h2>
+      <ol><li>Periksa bayi dan nilai tiap item sesuai definisi operasional Modified Finnegan yang digunakan di unit.</li><li>Masukkan skor item yang teramati; skor total dihitung otomatis.</li><li>Simpan setiap penilaian agar tren serial dapat ditinjau pada tab <b>Riwayat Serial</b>.</li><li>Gunakan label lokal/inisial seperlunya dan hindari memasukkan informasi identitas yang tidak diperlukan.</li></ol>
+      <h3>Interpretasi awal (bukan protokol terapi)</h3>
+      <ul><li><b>0–7:</b> skor relatif rendah; lanjutkan pemantauan dan perawatan suportif sesuai kondisi.</li><li><b>8–11:</b> perlu evaluasi klinis, peninjauan perawatan suportif, dan penerapan ambang serial sesuai protokol setempat.</li><li><b>≥12:</b> perlu evaluasi klinis segera dan pertimbangan tata laksana sesuai protokol serta penilaian neonatolog.</li></ul>
+      <div class="warning">Ambang dan frekuensi penilaian bervariasi antarprotokol. Sejumlah protokol memakai ambang berulang (misalnya skor ≥8 pada beberapa penilaian berturut-turut atau skor ≥12 pada penilaian berulang). Jangan gunakan angka di atas sebagai instruksi terapi mandiri.</div>
+      <h3>Algoritma penanganan berdasarkan skor</h3>
+      <ol>
+        <li><b>Setiap skor / semua bayi berisiko:</b> pastikan penilaian menggunakan instrumen dan interval yang konsisten; dokumentasikan paparan zat, usia gestasi, waktu muncul gejala, kemampuan menyusu, tidur, dan kemampuan ditenangkan.</li>
+        <li><b>Skor 0–7 (relatif rendah pada skema ringkasan ini):</b> lanjutkan perawatan suportif dan penilaian serial sesuai protokol. Kurangi rangsangan, lingkungan tenang, bedong bila sesuai, skin-to-skin/rooming-in bila aman, dukung pemberian ASI sesuai kelayakan klinis dan kebijakan paparan zat.</li>
+        <li><b>Skor 8–11:</b> lakukan penilaian ulang klinis; pastikan kebutuhan dasar dan perawatan suportif optimal; tinjau tren beberapa skor berturut-turut; nilai asupan, muntah/diare, berat badan, hidrasi, suhu, dan fungsi respirasi. Diskusikan dengan neonatolog bila gejala menetap atau mengganggu fungsi bayi.</li>
+        <li><b>Skor ≥12 atau gejala berat kapan pun:</b> evaluasi klinis segera. Pertimbangkan eskalasi pemantauan, evaluasi diagnosis banding, dan konsultasi neonatolog. Kejang, gangguan napas, dehidrasi bermakna, atau ketidakmampuan menyusu tidak boleh menunggu skor berikutnya.</li>
+        <li><b>Jika gejala berat/persisten meskipun dukungan optimal:</b> pertimbangkan farmakoterapi berdasarkan protokol rumah sakit, jenis paparan, pola gejala, kondisi bayi, serta keputusan tim klinis.</li>
+      </ol>
+      <h3>Kapan mulai obat?</h3>
+      <p>Farmakoterapi dapat dipertimbangkan pada <b>putus opioid neonatal yang berat atau menetap</b> meskipun intervensi nonfarmakologis telah dioptimalkan, terutama bila skor berulang tinggi menurut instrumen/protokol yang dipakai, atau bila gejala menyebabkan gangguan menyusu, tidur/kemampuan ditenangkan, muntah/diare dengan risiko dehidrasi, penurunan berat badan yang bermakna, atau komplikasi klinis.</p>
+      <ul>
+        <li>Dalam beberapa protokol berbasis Modified Finnegan, ambang yang digunakan adalah skor tinggi berulang (misalnya sekitar ≥8–9 pada 2–3 penilaian berturut-turut) atau skor sangat tinggi pada satu penilaian (sekitar ≥12–13). <b>Ambang berbeda antarversi</b> dan contoh ini tidak boleh diterapkan otomatis pada skala dalam aplikasi.</li>
+        <li>AAP menyebut contoh berbasis modifikasi MOTHER: skor konsisten 9–12 atau satu skor 13; obat dipertimbangkan untuk withdrawal berat setelah perawatan nonfarmakologis. Pastikan protokol setempat menentukan ambang yang tepat.</li>
+        <li>Untuk NOWS akibat opioid, opioid seperti morfin merupakan pilihan lini pertama yang umum digunakan; pilihan obat, dosis, interval, pemantauan, dan penurunan dosis wajib mengikuti protokol institusi serta keputusan neonatolog.</li>
+        <li>Clonidine atau fenobarbital kadang digunakan sebagai terapi tambahan pada kasus terpilih sesuai protokol spesialis. <b>Nalokson tidak digunakan untuk mengobati withdrawal kronik</b> karena dapat memperberat withdrawal dan memicu komplikasi.</li>
+      </ul>
+      <div class="warning">Jangan memulai obat hanya karena satu angka dari aplikasi. Instrumen ini merupakan draf ringkasan dan belum divalidasi terhadap formulir lokal. Keputusan obat memerlukan verifikasi instrumen, penilaian tren skor, gejala fungsional, diagnosis banding, dan perintah dokter yang berwenang.</div>
+      <h3>Catatan klinis & keselamatan</h3><ul>
+        <li>Gejala mirip withdrawal juga dapat disebabkan oleh sepsis, hipoglikemia, hipokalsemia/kelainan elektrolit, gangguan neurologis, atau kondisi lain; evaluasi penyebab lain sesuai keadaan klinis.</li>
+        <li>Gunakan instrumen yang sama secara konsisten dan pastikan penilai terlatih. Versi Modified Finnegan tidak selalu memiliki item, bobot, atau ambang identik.</li>
+        <li>Semua bayi membutuhkan pendekatan suportif individual; pantau asupan, output, berat badan, hidrasi, suhu, dan fungsi kardiorespirasi sesuai kondisi.</li>
+        <li>Dokumentasikan respons terhadap intervensi, alasan eskalasi, konsultasi, dan rencana penilaian selanjutnya.</li>
+      </ul>
+      <h3>Referensi untuk ditinjau</h3>
+      <ul>
+        <li>Patrick SW, et al. <i>Neonatal Opioid Withdrawal Syndrome</i>. American Academy of Pediatrics, Pediatrics. 2020;146(5):e2020029074. <a href="https://publications.aap.org/pediatrics/article/146/5/e2020029074/75310/Neonatal-Opioid-Withdrawal-Syndrome" target="_blank" rel="noopener">Buka laporan klinis AAP</a>.</li>
+        <li>Jones HE, et al. <i>Neonatal abstinence syndrome after methadone or buprenorphine exposure</i>. N Engl J Med. 2010;363:2320–2331. (Konteks modifikasi MOTHER; jangan menyamakan dengan semua versi Modified Finnegan.)</li>
+        <li>Protokol NAS/NOWS dan formulir skoring resmi rumah sakit setempat.</li>
+      </ul>
+      <p class="hint">Aplikasi ini merupakan alat bantu edukasi/pencatatan, bukan perangkat medis tervalidasi. Tinjau kembali konten dan skoring sebelum penggunaan klinis.</p>
+    </div>
+  </section>
+  <div class="footer">JR Neonatal Care · Modified Finnegan NAS · Data disimpan lokal pada browser</div>
+</main>
+<script>
+const assessmentItems = [
+ {name:"Menangis bernada tinggi",opts:[[0,"Tidak ada"],[2,"Ringan / sesekali"],[3,"Jelas / persisten"]]},
+ {name:"Tidur setelah menyusu",opts:[[0,"≥ 3 jam"],[1,"2–3 jam"],[2,"1–2 jam"],[3,"< 1 jam"]]},
+ {name:"Refleks Moro",opts:[[0,"Normal"],[1,"Sedikit meningkat"],[2,"Jelas meningkat"],[3,"Sangat meningkat / tidak lengkap"]]},
+ {name:"Tremor saat terganggu",opts:[[0,"Tidak ada"],[1,"Ringan"],[2,"Sedang / berat"]]},
+ {name:"Tremor saat istirahat",opts:[[0,"Tidak ada"],[3,"Ada"]]},
+ {name:"Tonus otot meningkat",opts:[[0,"Tidak ada"],[2,"Ada"]]},
+ {name:"Ekskoriasi kulit",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Mioklonus",opts:[[0,"Tidak ada"],[3,"Ada"]]},
+ {name:"Kejang umum",opts:[[0,"Tidak ada"],[5,"Ada — evaluasi segera"]]},
+ {name:"Berkeringat",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Suhu tubuh meningkat",opts:[[0,"≤ 37,2 °C"],[1,"37,3–38,3 °C"],[2,"> 38,3 °C"]]},
+ {name:"Menguap berlebihan",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Bercak / mottling",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Hidung tersumbat",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Bersin berulang",opts:[[0,"Tidak ada"],[1,"Ada"],[2,"Sering / berulang"]]},
+ {name:"Pernapasan cuping hidung",opts:[[0,"Tidak ada"],[2,"Ada"]]},
+ {name:"Frekuensi napas",opts:[[0,"< 60/menit"],[1,"≥ 60/menit tanpa retraksi"],[2,"≥ 60/menit dengan retraksi"]]},
+ {name:"Mengisap berlebihan",opts:[[0,"Tidak ada"],[1,"Ada"]]},
+ {name:"Kesulitan menyusu",opts:[[0,"Tidak ada"],[2,"Ada"]]},
+ {name:"Regurgitasi / muntah",opts:[[0,"Tidak ada"],[2,"Regurgitasi"],[3,"Muntah"]]},
+ {name:"Konsistensi feses",opts:[[0,"Normal"],[2,"Lembek"],[3,"Cair"]]}
+];
+const $ = id => document.getElementById(id);
+const storageKey = "jr_modified_finnegan_history_v1";
+let editingId = null;
+for(let i=1;i<=12;i++){let o=document.createElement("option");o.value=i;o.textContent=i;$("interval").appendChild(o)}
+function renderItems(){
+ const root=$("items");root.innerHTML="";
+ assessmentItems.forEach((item,i)=>{
+   const card=document.createElement("div");card.className="item";
+   const top=document.createElement("div");top.className="item-top";
+   const n=document.createElement("span");n.className="num";n.textContent=String(i+1).padStart(2,"0");
+   const title=document.createElement("div");title.className="item-title";title.textContent=item.name;
+   top.append(n,title);
+   const sel=document.createElement("select");sel.id="score_"+i;
+   const blank=document.createElement("option");blank.value="";blank.textContent="Pilih skor…";sel.appendChild(blank);
+   item.opts.forEach(([v,t])=>{let op=document.createElement("option");op.value=v;op.textContent=`${v} — ${t}`;sel.appendChild(op)});
+   sel.addEventListener("change",updateTotal);
+   card.append(top,sel);root.appendChild(card);
+ });
+}
+function scoreData(){return assessmentItems.map((it,i)=>{let v=$("score_"+i).value;return v===""?null:Number(v)})}
+function updateTotal(){
+ const vals=scoreData();const total=vals.reduce((a,v)=>a+(v===null?0:v),0);const selected=vals.filter(v=>v!==null).length;
+ $("total").textContent=total;
+ const st=$("status"),interp=$("interpretation");
+ st.className="status"; 
+ if(!selected){st.classList.add("green");st.textContent="Belum ada skor";interp.textContent="Pilih item untuk menghitung skor."}
+ else if(total<=7){st.classList.add("green");st.textContent="Skor 0–7";interp.textContent=`${selected}/21 item telah diisi. Skor relatif rendah; lanjutkan pemantauan sesuai protokol.`}
+ else if(total<=11){st.classList.add("amber");st.textContent="Skor 8–11";interp.textContent=`${selected}/21 item telah diisi. Evaluasi klinis dan tinjau protokol penilaian serial.`}
+ else {st.classList.add("red");st.textContent="Skor ≥12";interp.textContent=`${selected}/21 item telah diisi. Perlu evaluasi klinis segera sesuai protokol NICU.`}
+ updateClinical(vals,total,selected);
+}
+function updateClinical(vals,total,selected){
+ const cls=$("clinicalClass"), groups=$("symptomGroups"), sit=$("clinicalSituation"), act=$("clinicalAction");
+ if(!selected){cls.textContent="Belum dapat diklasifikasikan";groups.textContent="Pilih skor pada item untuk melihat kelompok gejala.";sit.textContent="Lengkapi penilaian item untuk menghasilkan ringkasan.";act.textContent="Penilaian serial, perawatan suportif, dan evaluasi klinis sesuai protokol NICU.";return}
+ const cns=[0,1,2,3,4,5,7,8,17,18].some(i=>vals[i]!==null&&vals[i]>0);
+ const auto=[9,10,11,12,13,14,15,16].some(i=>vals[i]!==null&&vals[i]>0);
+ const gi=[18,19,20].some(i=>vals[i]!==null&&vals[i]>0);
+ const groupsList=[];if(cns)groupsList.push("Neurologis / perilaku");if(auto)groupsList.push("Otonom / respirasi");if(gi)groupsList.push("Gastrointestinal / menyusu");
+ groups.textContent=groupsList.length?groupsList.join(" · "):"Belum ada kelompok gejala positif dari item yang terisi.";
+ let level, situation, action;
+ if(total<=7){level="Skor relatif rendah (0–7)";situation="Gejala yang tercatat berada pada rentang skor lebih rendah. Nilai tren serial dan fungsi bayi; skor rendah tidak menyingkirkan penyakit lain.";action="Lanjutkan perawatan suportif dan pemantauan serial sesuai protokol. Tinjau kemampuan menyusu, tidur, kemampuan ditenangkan, hidrasi, dan berat badan."}
+ else if(total<=11){level="Gejala bermakna / perlu evaluasi (8–11)";situation="Skor berada pada rentang yang memerlukan evaluasi ulang dan peninjauan tren. Pertimbangkan dampak gejala pada menyusu, tidur, kenyamanan, serta hidrasi.";action="Optimalkan perawatan suportif, ulangi skor sesuai jadwal, nilai diagnosis banding dan fungsi bayi, serta diskusikan dengan neonatolog bila skor menetap/meningkat atau fungsi terganggu."}
+ else{level="Skor tinggi (≥12)";situation="Skor tinggi pada skema ringkasan ini dapat menandakan gejala yang lebih berat, tetapi bukan diagnosis atau indikasi obat otomatis.";action="Lakukan evaluasi klinis segera dan ikuti protokol eskalasi NICU. Pertimbangkan farmakoterapi hanya setelah menilai tren skor, respons suportif, gangguan fungsi, paparan zat, dan penyebab lain."}
+ const seizure=vals[8]!==null&&vals[8]>0, resp=vals[15]!==null&&vals[15]>0 || vals[16]!==null&&vals[16]>=2;
+ if(seizure||resp){situation+=" Terdapat item red-flag yang terpilih; perlu penilaian langsung segera.";action="Evaluasi segera oleh tim klinis; stabilisasi dan penilaian penyebab berbahaya sesuai kondisi. Jangan menunggu penilaian serial berikutnya."}
+ cls.textContent=level;sit.textContent=situation;act.textContent=action;
+}
+function getHistory(){try{return JSON.parse(localStorage.getItem(storageKey)||"[]")}catch(e){return []}}
+function setHistory(h){localStorage.setItem(storageKey,JSON.stringify(h))}
+function formatDate(v){if(!v)return "—";try{return new Date(v).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}catch(e){return v}}
+function currentRecord(){
+ const vals=scoreData();return {id:editingId||((Date.now().toString(36))+Math.random().toString(36).slice(2,7)),label:$("caseLabel").value.trim(),time:$("assessTime").value,assessor:$("assessor").value.trim(),interval:Number($("interval").value||1),scores:vals,total:vals.reduce((a,v)=>a+(v===null?0:v),0),filled:vals.filter(v=>v!==null).length}
+}
+function resetForm(){editingId=null;assessmentItems.forEach((_,i)=>$("score_"+i).value="");$("caseLabel").value="";$("assessor").value="";$("interval").value="1";$("assessTime").value=localDateTime();$("save").textContent="Simpan penilaian";updateTotal()}
+function localDateTime(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)}
+function saveRecord(){
+ const r=currentRecord();if(r.filled===0){alert("Pilih skor setidaknya pada satu item sebelum menyimpan.");return}
+ const h=getHistory();const idx=h.findIndex(x=>x.id===r.id);if(idx>=0)h[idx]=r;else h.push(r);h.sort((a,b)=>(a.time||"").localeCompare(b.time||""));setHistory(h);renderHistory();resetForm();alert("Penilaian tersimpan pada browser ini.")
+}
+function renderHistory(){
+ const h=getHistory();const body=$("historyRows");body.innerHTML="";$("emptyHistory").classList.toggle("hidden",h.length>0);
+ h.slice().reverse().forEach(r=>{
+  const tr=document.createElement("tr");const level=r.total<=7?"0–7":r.total<=11?"8–11":"≥12";
+  const cells=[formatDate(r.time),r.label||"—",String(r.interval),String(r.total),level,r.assessor||"—"];
+  cells.forEach((v,i)=>{const td=document.createElement("td");td.textContent=v;if(i===3)td.style.fontWeight="900";tr.appendChild(td)});
+  const td=document.createElement("td");const edit=document.createElement("button");edit.className="secondary";edit.textContent="Buka";edit.onclick=()=>loadRecord(r.id);const del=document.createElement("button");del.className="danger";del.style.marginLeft="5px";del.textContent="Hapus";del.onclick=()=>{if(confirm("Hapus penilaian ini?")){setHistory(getHistory().filter(x=>x.id!==r.id));renderHistory()}};td.append(edit,del);tr.appendChild(td);body.appendChild(tr)
+ })
+}
+function loadRecord(id){const r=getHistory().find(x=>x.id===id);if(!r)return;editingId=r.id;$("caseLabel").value=r.label||"";$("assessTime").value=r.time||"";$("assessor").value=r.assessor||"";$("interval").value=String(r.interval||1);r.scores.forEach((v,i)=>$("score_"+i).value=v===null?"":String(v));$("save").textContent="Perbarui penilaian";document.querySelector('[data-tab="assessment"]').click();updateTotal()}
+function exportCSV(){const h=getHistory();if(!h.length){alert("Belum ada data untuk diekspor.");return}const headers=["Waktu","Label","Penilaian ke","Penilai","Skor total",...assessmentItems.map(x=>x.name)];const rows=h.map(r=>[r.time,r.label,r.interval,r.assessor,r.total,...r.scores.map(v=>v===null?"":v)]);const csv=[headers,...rows].map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="riwayat_modified_finnegan.csv";a.click();URL.revokeObjectURL(a.href)}
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));["assessment","history","guide"].forEach(id=>$(id).classList.toggle("hidden",id!==btn.dataset.tab));if(btn.dataset.tab==="history")renderHistory()}));
+$("save").addEventListener("click",saveRecord);$("reset").addEventListener("click",()=>{if(confirm("Kosongkan seluruh isian saat ini?"))resetForm()});$("export").addEventListener("click",exportCSV);
+$("clearHistory").addEventListener("click",()=>{if(confirm("Hapus semua riwayat yang tersimpan di browser ini?")){setHistory([]);renderHistory()}});
+renderItems();$("assessTime").value=localDateTime();updateTotal();renderHistory();
+</script>
+</body></html>
