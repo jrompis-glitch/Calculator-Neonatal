@@ -39,3 +39,7 @@ Versi 1.2.9: input TSB/Bilirubin dan PaO₂ mendukung dua angka desimal; PaCO₂
 - Menggunakan tabel numerik preduktal/postduktal usia gestasi 35–41 minggu dari workbook PPI yang disediakan.
 - Interpretasi rentang persentil: di bawah P3 (sangat rendah), P3–<P10 (rendah), P10–<P25 (relatif rendah), P25–P75 (rentang tengah), >P75–P90 (relatif tinggi), >P90–P97 (tinggi), di atas P97 (sangat tinggi).
 - Grafik SVG menampilkan sumbu angka, tujuh kurva persentil, dan titik merah pasien sesuai input. Di luar 35–41 minggu, hasil persentil tidak dihitung.
+
+
+## Integrasi terbaru
+Ditambahkan modul Kalkulator Cardiac Output/Cardiac Index untuk LV dan RV, dengan SV absolut dan terindeks, CO absolut dan terindeks, CI, serta kesimpulan otomatis. Angka ditampilkan 2 desimal. Navigasi melalui kartu Beranda atau tab CO–CI.
