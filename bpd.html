@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12345a">
+<meta name="description" content="Kalkulator BPD NICHD 2022 dan klasifikasi BPD Jensen 2019.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png" type="image/svg+xml">
+<title>Kalkulator BPD • Neonatal Clinical Calculator</title>
+<style>
+:root{--navy:#12345a;--blue:#246b9d;--bg:#f2f5f9;--ink:#172536;--muted:#627286;--line:#d9e1ea;--pale:#eaf2fb;--gold:#fff3cf;--green:#eaf6ef;--red:#fff0ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:20px 16px}.wrap{max-width:920px;margin:auto}.head{display:flex;align-items:center;gap:12px}.head img{width:48px;height:48px}.head h1{font-size:clamp(22px,4vw,29px);margin:0}.head p{margin:5px 0 0;color:#dce9f5;font-size:13px}
+main{max-width:920px;margin:16px auto 40px;padding:0 13px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#e4ebf3;padding:6px;border-radius:14px;margin-bottom:14px}
+.tab{border:0;border-radius:10px;padding:13px 8px;font-size:14px;font-weight:750;color:#42566d;background:transparent;min-height:46px;cursor:pointer}
+.tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 8px #173a5a18}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:13px;box-shadow:0 3px 14px #142d4b08}
+h2{font-size:17px;color:var(--navy);margin:0 0 14px}h3{font-size:14px;color:var(--navy);margin:15px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field label{display:block;font-size:13px;font-weight:700;color:#334960;margin-bottom:6px}
+input,select{width:100%;min-height:44px;padding:10px 11px;border:1px solid #cbd6e2;border-radius:9px;background:white;color:var(--ink);font:inherit;font-size:16px}
+small,.hint{display:block;color:var(--muted);font-size:11.5px;line-height:1.45;margin-top:4px}
+.section-label{font-size:12px;font-weight:800;color:#516a83;background:#f0f4f8;padding:8px 10px;border-radius:8px;margin:16px 0 10px}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.daybox{border:1px solid var(--line);border-radius:10px;padding:10px 8px;background:#fbfcfe}
+.daybox b{display:block;text-align:center;color:var(--navy);font-size:13px;margin-bottom:8px}
+.daybox label{font-size:11px;font-weight:700;display:block;margin:7px 0 4px;color:#4b6077}
+.daybox select,.daybox input{font-size:13px;min-height:38px;padding:7px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+button.action{border:0;border-radius:10px;min-height:43px;padding:11px 15px;font-weight:750;cursor:pointer}
+.primary{background:var(--navy);color:#fff}.secondary{background:#e9eef4;color:#243b54}
+.notice{padding:12px 13px;border-radius:11px;background:var(--gold);border:1px solid #efd994;color:#6e5818;font-size:12px;line-height:1.5;margin:12px 0}
+.alert{padding:12px;border-radius:10px;background:var(--red);border:1px solid #f1c9c5;color:#8a2d28;font-size:13px;line-height:1.5}
+.ok{padding:12px;border-radius:10px;background:var(--green);border:1px solid #c8e5d2;color:#245c39;font-size:13px;line-height:1.5}
+.resultgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.metric{background:#f4f8fc;border:1px solid #dce6ef;border-radius:10px;padding:10px 7px;text-align:center}
+.metric span{display:block;color:#50647a;font-size:11px;min-height:30px}
+.metric strong{font-size:19px;color:var(--navy)}
+.bar{height:7px;background:#e4ebf2;border-radius:99px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:#2d78aa}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--navy);background:#f4f7fa}
+.right{text-align:right;font-variant-numeric:tabular-nums}
+.pma{display:flex;align-items:center;justify-content:space-between;background:var(--pale);padding:12px 13px;border-radius:10px;margin-top:12px;gap:10px}
+.pma strong{color:var(--navy);font-size:18px}
+.resultbox{background:#f4f8fc;border:2px solid #d5e2ee;border-radius:12px;padding:15px}
+.resultbox .big{font-size:21px;font-weight:800;color:var(--navy);margin:5px 0}
+.foot{font-size:11.5px;line-height:1.55;color:var(--muted);margin:12px 2px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.days{grid-template-columns:repeat(2,minmax(0,1fr))}.resultgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.tab{font-size:12px}}
+@media print{header,.tabs,.btnrow{display:none!important}body{background:white}.panel{display:block!important}.card{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap head"><img src="./icons/icon-192.png" alt=""><div><h1>Kalkulator BPD</h1><p>Neonatal Clinical Calculator • Perinatology Sam Ratulangi</p></div></div></header>
+<div style="max-width:920px;margin:10px auto 0;padding:0 13px"><a href="./index.html" style="color:#12345a;text-decoration:none;font-weight:700;font-size:13px">← Kembali ke Neonatal Clinical Calculator</a></div>
+<main>
+<nav class="tabs" aria-label="Menu kalkulator">
+<button class="tab active" data-tab="nichd">BPD NICHD 2022</button>
+<button class="tab" data-tab="jensen">BPD Jensen 2019</button>
+</nav>
+
+<section id="nichd" class="panel active">
+<div class="card">
+<h2>A. Data dasar bayi – NICHD 2022</h2>
+<div class="grid">
+<div class="field"><label for="n_bw">Berat lahir (gram)</label><input id="n_bw" type="number" min="500" max="1250" step="1" value="800"><small>Input 500–1.250 g; prediksi hanya pada rentang validasi 501–1.250 g.</small></div>
+<div class="field"><label for="n_ga">Usia gestasi saat lahir (minggu lengkap)</label><select id="n_ga"><option>22</option><option>23</option><option>24</option><option>25</option><option selected>26</option><option>27</option><option>28</option></select><small>Model menerima 22–28 minggu; rentang validasi 23–28 minggu lengkap.</small></div>
+<div class="field"><label for="n_sex">Jenis kelamin</label><select id="n_sex"><option>Laki-laki</option><option>Perempuan</option><option>Tidak diketahui</option></select></div>
+<div class="field"><label for="n_ans">Kortikosteroid antenatal (ANS)</label><select id="n_ans"><option>Ya</option><option>Tidak</option><option>Tidak diketahui</option></select><small>Digunakan pada prediksi hari ke-1.</small></div>
+<div class="field"><label for="n_nec">Surgical NEC</label><select id="n_nec"><option>Tidak</option><option>Ya</option><option>Tidak diketahui</option></select><small>Digunakan pada prediksi hari ke-14 dan 28.</small></div>
+</div>
+<div class="section-label">Kriteria kelayakan populasi model</div>
+<div class="grid">
+<div class="field"><label for="n_survive">Bertahan hidup lebih dari 12 jam setelah lahir?</label><select id="n_survive"><option>Ya</option><option>Tidak</option><option>Tidak diketahui</option></select></div>
+<div class="field"><label for="n_anomaly">Tidak ada anomali kongenital mayor?</label><select id="n_anomaly"><option>Ya</option><option>Tidak</option><option>Tidak diketahui</option></select></div>
+<div class="field"><label for="n_transfer">Tidak transfer sebelum 36 minggu PMA?</label><select id="n_transfer"><option>Ya</option><option>Tidak</option><option>Tidak diketahui</option></select></div>
+</div>
+</div>
+
+<div class="card">
+<h2>B. Data respirasi setiap hari prediksi</h2>
+<p class="hint">Masukkan FiO₂ dan satu kategori dukungan respirasi tertinggi yang digunakan pada hari tersebut. Hari prediksi: 1, 3, 7, 14, dan 28.</p>
+<div class="days" id="dayInputs"></div>
+<div class="btnrow"><button class="action primary" id="calcNichd">Hitung probabilitas BPD</button><button class="action secondary" id="resetNichd">Reset NICHD</button></div>
+</div>
+
+<div class="card">
+<h2>C. Hasil prediksi NICHD 2022</h2>
+<div id="n_validation" class="notice">Lengkapi data untuk melihat status validasi model.</div>
+<div id="n_results"><p class="hint">Hasil probabilitas akan ditampilkan setelah data valid.</p></div>
+<div class="foot">Luaran: No BPD, Grade 1 BPD, Grade 2 BPD, Grade 3 BPD, dan kematian sebelum 36 minggu PMA. Kelima luaran saling eksklusif dan total probabilitas per hari seharusnya 100%. Prediksi merupakan estimasi probabilistik, bukan diagnosis atau kepastian luaran individual.</div>
+</div>
+<div class="foot">Sumber koefisien dan aturan input diambil dari workbook NICHD 2022 yang diberikan pengguna. Persamaan multinomial memakai No BPD sebagai kategori referensi. Transformasi: berat lahir/100; GA minggu lengkap; FiO₂ desimal ×5; kategori unknown pada variabel biner =0,5; dukungan respirasi one-hot. Referensi persamaan: <a href="https://neonatal.rti.org/BPD_Calculator_v20210620/BPD_calculator_equations_v3_clean.htm" target="_blank" rel="noopener">NICHD equation reference</a>.</div>
+</section>
+
+<section id="jensen" class="panel">
+<div class="card">
+<h2>A. Data bayi – Jensen 2019</h2>
+<div class="grid">
+<div class="field"><label for="j_ga">Usia gestasi saat lahir (minggu)</label><input id="j_ga" type="number" min="22" max="31" step="1" value="26"><small>Populasi utama penelitian: lahir &lt;32 minggu.</small></div>
+<div class="field"><label for="j_days">Usia gestasi saat lahir (hari)</label><select id="j_days"><option value="0">0 hari</option><option value="1">1 hari</option><option value="2">2 hari</option><option value="3">3 hari</option><option value="4">4 hari</option><option value="5">5 hari</option><option value="6">6 hari</option></select></div>
+<div class="field"><label for="j_postnatal">Usia postnatal saat penilaian (hari)</label><input id="j_postnatal" type="number" min="0" step="1" value="70"></div>
+<div class="field"><label for="j_sex">Jenis kelamin</label><select id="j_sex"><option>Laki-laki</option><option>Perempuan</option></select><small>Informasi dokumentasi; tidak mengubah grade Jensen.</small></div>
+</div>
+<div class="pma"><span>Postmenstrual age (PMA)</span><strong id="j_pma">36+0 minggu</strong></div>
+</div>
+<div class="card">
+<h2>B. Dukungan respirasi pada 36 minggu PMA</h2>
+<div class="grid">
+<div class="field"><label for="j_support">Jenis dukungan respirasi</label><select id="j_support"><option value="">-- Pilih dukungan --</option><option value="none" selected>Tidak ada dukungan</option><option value="nc">Nasal cannula</option><option value="hfnc">HFNC</option><option value="cpap">CPAP</option><option value="nippv">NIPPV</option><option value="imv">IMV (ventilasi invasif)</option></select></div>
+<div class="field"><label for="j_flow">Flow nasal cannula (L/menit)</label><input id="j_flow" type="number" min="0" max="20" step="0.1" value="0"><small>Isi bila memilih nasal cannula.</small></div>
+<div class="field"><label for="j_fio2">FiO₂ (%) – informasi</label><input id="j_fio2" type="number" min="21" max="100" step="1" value="21"><small>FiO₂ tidak menentukan grade dalam definisi Jensen 2019.</small></div>
+</div>
+</div>
+<div class="card">
+<h2>C. Hasil klasifikasi Jensen</h2>
+<div class="resultbox" aria-live="polite"><div class="hint">Status penilaian</div><div class="big" id="j_grade">Tidak ada BPD menurut klasifikasi Jensen</div><div id="j_basis" class="hint">Tidak memerlukan dukungan respirasi pada 36 minggu PMA.</div></div>
+<div class="btnrow"><button class="action primary" id="resetJensen">Reset Jensen</button><button class="action secondary" id="printPage">Cetak / Simpan PDF</button></div>
+<div class="notice"><b>Penting:</b> Klasifikasi dilakukan pada 36+0 sampai 36+6 minggu PMA. Bila penilaian dilakukan di luar rentang tersebut, kalkulator tidak memberikan grade Jensen pada titik waktu yang tepat. Penelitian asli mencakup bayi lahir &lt;32 minggu.</div>
+<table><thead><tr><th>Kategori</th><th>Kriteria</th></tr></thead><tbody>
+<tr><td>Tidak ada BPD</td><td>Tidak memerlukan dukungan respirasi.</td></tr>
+<tr><td>Grade 1 – Ringan</td><td>Nasal cannula ≤2 L/menit.</td></tr>
+<tr><td>Grade 2 – Sedang</td><td>Nasal cannula &gt;2 L/menit atau CPAP/NIPPV.</td></tr>
+<tr><td>Grade 3 – Berat</td><td>Ventilasi mekanik invasif.</td></tr></tbody></table>
+<p class="foot">HFNC dipetakan sebagai Grade 2 pada implementasi aplikasi ini mengikuti versi kalkulator sebelumnya; definisi operasional HFNC perlu disesuaikan dengan protokol lokal.</p>
+</div>
+<div class="foot">Referensi: Jensen EA, Dysart K, Gantz MG, et al. The Diagnosis of Bronchopulmonary Dysplasia in Very Preterm Infants: An Evidence-based Approach. Am J Respir Crit Care Med. 2019;200(6):751–759. doi:10.1164/rccm.201812-2348OC.</div>
+</section>
+</main>
+<script>
+const COEFF = {"1":{"Grade 1 BPD":[4.9291,-0.2294,-0.215,0.2058,0.3449,0.0416,0,3.0396,2.2306,1.6518,1.9743,2.2903,0.5254,0],"Grade 2 BPD":[5.0616,-0.4245,-0.1912,0.2193,0.7437,0.00574,0,3.5266,2.3098,1.3756,1.6092,1.251,-0.9808,0],"Grade 3 BPD":[6.2967,-0.4503,-0.3043,0.4125,0.6998,0.4912,0,3.3379,2.4123,0.9667,1.6672,2.0211,0.8203,0],"Kematian":[12.7791,-0.5137,-0.4463,0.5407,0.7472,-0.2521,0,1.9929,0.7088,-0.0387,0.1949,0.6494,-1.0758,0]},"3":{"Grade 1 BPD":[4.5351,-0.1958,-0.2097,0.2449,0.3291,0,0,2.8612,2.2455,1.7769,1.8263,1.9242,0.5198,0],"Grade 2 BPD":[3.0987,-0.3648,-0.1935,0.2401,0.7229,0,0,4.9894,3.8294,2.9662,3.0618,2.1682,1.4126,0],"Grade 3 BPD":[-3.3371,-0.3817,-0.291,0.3401,0.6741,0,0,12.7545,11.8005,10.6459,10.5963,10.5738,9.7391,0],"Kematian":[11.8691,-0.4317,-0.473,0.7273,0.6238,0,0,1.9177,0.8703,-0.065,0.3432,0.3011,0.7349,0]},"7":{"Grade 1 BPD":[1.144,-0.1866,-0.0912,0.4595,0.3321,0,0,3.0036,2.5416,2.0242,1.823,1.5886,0.8681,0],"Grade 2 BPD":[-1.2235,-0.3321,-0.0226,0.5762,0.7067,0,0,4.3533,3.4638,2.4279,2.1694,1.4526,0.2076,0],"Grade 3 BPD":[-1.6145,-0.3433,-0.0885,0.7834,0.6661,0,0,5.0163,4.3176,2.8708,2.7186,2.4215,1.7167,0],"Kematian":[4.967,-0.3966,-0.2435,0.9298,0.6094,0,0,2.4941,1.7026,0.7729,0.4705,-0.0608,0.6065,0]},"14":{"Grade 1 BPD":[-2.5703,-0.1762,0.035,0.5619,0.3118,0,-0.2117,3.1652,2.9005,2.2808,1.974,1.4227,0.7885,0],"Grade 2 BPD":[-7.4441,-0.3211,0.1794,0.6591,0.6909,0,-0.3794,5.2531,4.4611,3.0693,2.8811,1.5264,0.1524,0],"Grade 3 BPD":[-7.8023,-0.3191,0.152,0.8571,0.6327,0,1.1442,4.7797,4.1855,2.1917,1.8422,1.1852,-9.8714,0],"Kematian":[-0.8084,-0.3862,-0.055,0.8792,0.5066,0,0.3749,3.0699,2.3286,1.4692,0.9357,-0.3158,0.6584,0]},"28":{"Grade 1 BPD":[-4.4735,-0.1437,0.0675,0.6873,0.2321,0,-0.2276,4.3301,4.0115,3.2276,3.0016,2.1805,1.7387,0],"Grade 2 BPD":[-10.998,-0.2763,0.2368,0.8902,0.5582,0,-0.1591,7.5578,6.4832,5.063,4.6981,2.8929,2.0932,0],"Grade 3 BPD":[-10.6378,-0.2782,0.2162,1.1343,0.4722,0,0.908,6.1545,5.3745,2.8445,2.4478,1.3087,1.5484,0],"Kematian":[-4.5017,-0.3319,0.0183,1.3648,0.341,0,1.548,3.7868,2.5009,1.1441,0.8302,-1.0193,0.00172,0]}};
+const supportNames = ["HFV","CV","NIPPV","CPAP","NC","Hood","Tanpa dukungan"];
+const days = [1,3,7,14,28];
+const outcomes = ["Grade 1 BPD","Grade 2 BPD","Grade 3 BPD","Kematian"];
+const dayInputs = document.getElementById("dayInputs");
+days.forEach(d=>{
+  const box=document.createElement("div");box.className="daybox";
+  box.innerHTML=`<b>Hari ${d}</b><label for="fio${d}">FiO₂ (%)</label><input id="fio${d}" type="number" min="21" max="100" step="1" value="21"><label for="sup${d}">Dukungan</label><select id="sup${d}"><option value="">Pilih</option>${supportNames.map(x=>`<option>${x}</option>`).join("")}</select>`;
+  dayInputs.appendChild(box);
+});
+function binary(v){return v==="Ya"?1:v==="Tidak"?0:0.5}
+function calcNichd(){
+  const bw=Number(document.getElementById("n_bw").value);
+  const ga=Number(document.getElementById("n_ga").value);
+  const sex=document.getElementById("n_sex").value;
+  const ans=document.getElementById("n_ans").value;
+  const nec=document.getElementById("n_nec").value;
+  const checks=["n_survive","n_anomaly","n_transfer"].map(id=>document.getElementById(id).value);
+  const validation=document.getElementById("n_validation"), output=document.getElementById("n_results");
+  const errors=[];
+  if(!Number.isFinite(bw)||bw<500||bw>1250)errors.push("Berat lahir harus 500–1.250 gram.");
+  if(!Number.isFinite(ga)||ga<22||ga>28)errors.push("Usia gestasi harus 22–28 minggu lengkap.");
+  if(bw<501||bw>1250)errors.push("Berat lahir di luar rentang validasi (501–1.250 gram).");
+  if(ga<23||ga>28)errors.push("Usia gestasi di luar rentang validasi (23–28 minggu lengkap).");
+  if(checks.some(x=>x!=="Ya"))errors.push("Kriteria eksklusi/tidak diketahui: harus bertahan >12 jam, tidak ada anomali kongenital mayor, dan tidak transfer sebelum 36 minggu PMA.");
+  if(errors.length){validation.className="alert";validation.innerHTML="<b>Prediksi tidak dihitung.</b><br>"+errors.join("<br>");output.innerHTML="";return}
+  validation.className="ok";validation.textContent="Dalam rentang input dan kriteria validasi pada workbook NICHD 2022. Interpretasikan hasil sebagai estimasi probabilistik.";
+  let html="";
+  days.forEach(d=>{
+    const fio=Number(document.getElementById("fio"+d).value);
+    const support=document.getElementById("sup"+d).value;
+    if(!Number.isFinite(fio)||fio<21||fio>100||!support){html+=`<div class="notice">Hari ${d}: input FiO₂ (21–100%) atau dukungan respirasi belum lengkap; prediksi hari ini tidak tersedia.</div>`;return}
+    const rowset=COEFF[String(d)];
+    const eta=outcomes.map(out=>{
+      const c=rowset[out];
+      const bwterm=c[1]*(bw/100), gate=c[2]*ga, fioterm=c[3]*((fio/100)*5);
+      const sexterm=c[4]*(sex==="Laki-laki"?1:sex==="Perempuan"?0:0.5);
+      const ansterm=d===1?c[5]*binary(ans):0;
+      const necterm=(d===14||d===28)?c[6]*binary(nec):0;
+      const supportIndex=supportNames.indexOf(support);
+      const supportterm=c[7+supportIndex];
+      return c[0]+bwterm+gate+fioterm+sexterm+ansterm+necterm+supportterm;
+    });
+    const max=Math.max(0,...eta);
+    const exp=eta.map(x=>Math.exp(x-max));
+    const den=Math.exp(-max)+exp.reduce((a,b)=>a+b,0);
+    const probs=[Math.exp(-max)/den,...exp.map(x=>x/den)];
+    const labels=["No BPD",...outcomes];
+    const pct=probs.map(x=>x*100);
+    const top=pct.indexOf(Math.max(...pct));
+    html+=`<div class="section-label">Hari postnatal ${d} – luaran prediksi 36 minggu PMA</div><div class="resultgrid">${labels.map((lab,i)=>`<div class="metric"><span>${lab}</span><strong>${pct[i].toFixed(1)}%</strong><div class="bar"><i style="width:${pct[i]}%"></i></div></div>`).join("")}</div><p class="hint">Probabilitas tertinggi: <b>${labels[top]}</b> (${pct[top].toFixed(2)}%). Total: ${pct.reduce((a,b)=>a+b,0).toFixed(2)}%.</p>`;
+  });
+  output.innerHTML=html;
+}
+document.getElementById("calcNichd").addEventListener("click",calcNichd);
+document.getElementById("resetNichd").addEventListener("click",()=>{
+  document.getElementById("n_bw").value=800;document.getElementById("n_ga").value=26;
+  document.getElementById("n_sex").value="Laki-laki";document.getElementById("n_ans").value="Ya";document.getElementById("n_nec").value="Tidak";
+  ["n_survive","n_anomaly","n_transfer"].forEach(id=>document.getElementById(id).value="Ya");
+  days.forEach(d=>{document.getElementById("fio"+d).value=21;document.getElementById("sup"+d).value=""});
+  document.getElementById("n_validation").className="notice";document.getElementById("n_validation").textContent="Lengkapi data untuk melihat status validasi model.";document.getElementById("n_results").innerHTML='<p class="hint">Hasil probabilitas akan ditampilkan setelah data valid.</p>';
+});
+function updateJensen(){
+  const gw=Number(document.getElementById("j_ga").value),gd=Number(document.getElementById("j_days").value),pn=Number(document.getElementById("j_postnatal").value);
+  const s=document.getElementById("j_support").value,flow=Number(document.getElementById("j_flow").value),fio=Number(document.getElementById("j_fio2").value);
+  const pma=document.getElementById("j_pma"),grade=document.getElementById("j_grade"),basis=document.getElementById("j_basis");
+  if(document.getElementById("j_ga").value===""||document.getElementById("j_postnatal").value===""||!s){pma.textContent="Lengkapi input";grade.textContent="Lengkapi input";basis.textContent="Masukkan semua data yang diperlukan.";return}
+  if(!Number.isInteger(gw)||gw<22||gw>31||!Number.isInteger(pn)||pn<0||!Number.isFinite(fio)||fio<21||fio>100){pma.textContent="Input tidak valid";grade.textContent="Periksa input";basis.textContent="GA 22–31 minggu, usia postnatal ≥0 hari, dan FiO₂ 21–100%.";return}
+  if(s==="nc"&&(!Number.isFinite(flow)||flow<0)){grade.textContent="Periksa flow";basis.textContent="Flow nasal cannula harus ≥0 L/menit.";return}
+  const total=gw*7+gd+pn, weeks=Math.floor(total/7), rem=total%7;pma.textContent=`${weeks}+${rem} minggu`;
+  if(weeks!==36){grade.textContent="Belum dapat diklasifikasikan";basis.textContent="Klasifikasi Jensen dilakukan pada 36+0 sampai 36+6 minggu PMA.";return}
+  if(gw>=32){grade.textContent="Di luar populasi utama penelitian";basis.textContent="Penelitian Jensen mengembangkan klasifikasi pada bayi lahir <32 minggu. Interpretasikan dengan hati-hati.";return}
+  if(s==="none"){grade.textContent="Tidak ada BPD menurut klasifikasi Jensen";basis.textContent="Tidak memerlukan dukungan respirasi pada 36 minggu PMA."}
+  else if(s==="nc"&&flow<=2){grade.textContent="BPD Grade 1 – Ringan";basis.textContent=`Nasal cannula ${flow} L/menit (≤2 L/menit).`}
+  else if(s==="nc"&&flow>2){grade.textContent="BPD Grade 2 – Sedang";basis.textContent=`Nasal cannula ${flow} L/menit (>2 L/menit).`}
+  else if(["hfnc","cpap","nippv"].includes(s)){grade.textContent="BPD Grade 2 – Sedang";basis.textContent=`${document.getElementById("j_support").selectedOptions[0].text} pada 36 minggu PMA.`}
+  else if(s==="imv"){grade.textContent="BPD Grade 3 – Berat";basis.textContent="Ventilasi mekanik invasif pada 36 minggu PMA."}
+  basis.textContent+=" FiO₂ "+fio+"% dicatat sebagai informasi dan tidak mengubah grade.";
+}
+["j_ga","j_days","j_postnatal","j_support","j_flow","j_fio2"].forEach(id=>document.getElementById(id).addEventListener("input",updateJensen));
+document.getElementById("resetJensen").addEventListener("click",()=>{document.getElementById("j_ga").value=26;document.getElementById("j_days").value=0;document.getElementById("j_postnatal").value=70;document.getElementById("j_support").value="none";document.getElementById("j_flow").value=0;document.getElementById("j_fio2").value=21;updateJensen()});
+document.getElementById("printPage").addEventListener("click",()=>window.print());
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===btn.dataset.tab));
+}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+updateJensen();
+</script>
+</body></html>

@@ -2,43 +2,32 @@
   "id": "./",
   "name": "Neonatal Clinical Calculator Perinatology Sam Ratulangi",
   "short_name": "Neonatal Calc",
-  "description": "Kalkulator klinis neonatus Perinatology Sam Ratulangi.",
+  "description": "Kalkulator klinis neonatus: GIR, AAP 2022, BIND-M, Thompson, Fenton 2025, PPI, Oxygen Index, PAIN, Finnegan, dan BPD NICHD 2022/Jensen 2019.",
   "lang": "id-ID",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui"
-  ],
   "orientation": "portrait",
-  "background_color": "#ffffff",
+  "background_color": "#f4f7fb",
   "theme_color": "#12375b",
-  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "./icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "./icon-512.png",
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/jr-perinatology-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "./icon-maskable-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }

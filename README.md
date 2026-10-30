@@ -40,24 +40,10 @@ Versi 1.2.9: input TSB/Bilirubin dan PaO₂ mendukung dua angka desimal; PaCO₂
 - Interpretasi rentang persentil: di bawah P3 (sangat rendah), P3–<P10 (rendah), P10–<P25 (relatif rendah), P25–P75 (rentang tengah), >P75–P90 (relatif tinggi), >P90–P97 (tinggi), di atas P97 (sangat tinggi).
 - Grafik SVG menampilkan sumbu angka, tujuh kurva persentil, dan titik merah pasien sesuai input. Di luar 35–41 minggu, hasil persentil tidak dihitung.
 
-\n## Perbaikan PWA dan ikon — v1.2.10
-- Manifest PWA diperbaiki: ikon `any` dan `maskable` dipisahkan.
-- Ikon instalasi Android dibuat dari logo JR Perinatology yang disertakan.
-- Service worker diperkuat agar kegagalan satu aset opsional tidak membatalkan instalasi.
-- Cache service worker diberi versi baru dan aset lama dibersihkan saat aktivasi.
-- Header Vercel untuk manifest dan service worker diperbarui agar tidak memakai cache lama.
-- Metadata Android/iOS dan favicon ditambahkan.
-\nDeploy seluruh isi ZIP ke root repository Vercel; jangan unggah ZIP sebagai satu file ke root situs.
 
-
-## Versi 1.2.11 — Cardiac Output • CI
-- Menambahkan kalkulator Cardiac Output dan Cardiac Index untuk LVOT dan RVOT secara terpisah.
-- Input: berat badan, panjang badan, heart rate, diameter LVOT/RVOT, dan VTI LVOT/RVOT.
-- Menghitung CSA, SV, CO (mL/menit dan L/menit), BSA Mosteller, CI, CO terindeks berat badan, serta SV terindeks berat badan.
-- Rentang interpretasi ditandai sebagai orientatif dan tidak menggantikan penilaian klinis/ekokardiografi.
-- Cache Service Worker dinaikkan ke v1.2.11.
-
-
-## Versi 1.2.12
-- Menambahkan kartu **Kalkulator PPI Neonatal** pada grid beranda agar dapat dibuka dari tampilan utama, selain melalui navigasi bawah.
-- Mempertahankan modul PPI, CO–CI, seluruh kalkulator lain, serta ikon PWA.
+## Integrasi Kalkulator BPD
+- Menu **Kalkulator BPD** ditambahkan ke halaman utama tanpa mengganti modul yang sudah ada.
+- Halaman `bpd.html` memuat dua sub-menu: prediksi probabilitas NICHD 2022 (hari 1, 3, 7, 14, 28; No BPD, Grade 1, Grade 2, Grade 3, kematian) dan klasifikasi Jensen 2019 pada 36+0 sampai 36+6 minggu PMA.
+- Koefisien NICHD diambil dari workbook NICHD 2022 yang diberikan pengguna. Batas validasi dan kriteria eksklusi diterapkan di kalkulator.
+- Cache service worker diperbarui ke v1-15 dan `bpd.html` ditambahkan ke precache.
+- Modul BPD tidak menyimpan data pasien ke server.
