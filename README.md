@@ -48,3 +48,11 @@ Versi 1.2.9: input TSB/Bilirubin dan PaO₂ mendukung dua angka desimal; PaCO₂
 - Header Vercel untuk manifest dan service worker diperbarui agar tidak memakai cache lama.
 - Metadata Android/iOS dan favicon ditambahkan.
 \nDeploy seluruh isi ZIP ke root repository Vercel; jangan unggah ZIP sebagai satu file ke root situs.
+
+
+## Versi 1.2.11 — Cardiac Output • CI
+- Menambahkan kalkulator Cardiac Output dan Cardiac Index untuk LVOT dan RVOT secara terpisah.
+- Input: berat badan, panjang badan, heart rate, diameter LVOT/RVOT, dan VTI LVOT/RVOT.
+- Menghitung CSA, SV, CO (mL/menit dan L/menit), BSA Mosteller, CI, CO terindeks berat badan, serta SV terindeks berat badan.
+- Rentang interpretasi ditandai sebagai orientatif dan tidak menggantikan penilaian klinis/ekokardiografi.
+- Cache Service Worker dinaikkan ke v1.2.11.

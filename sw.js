@@ -1,4 +1,4 @@
-const CACHE = 'neonatal-clinical-calculator-pwa-v1-2-10-flat';
+const CACHE = 'neonatal-clinical-calculator-pwa-v1-2-11-flat';
 const CORE_ASSETS = [
   './',
   './index.html',

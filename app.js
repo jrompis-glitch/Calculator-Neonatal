@@ -2,7 +2,7 @@ document.querySelectorAll("[data-open-page]").forEach(el=>el.addEventListener("c
 let AAP=window.AAP2022Thresholds||{};
 const $=id=>document.getElementById(id);const fmt=(n,d=2)=>Number.isFinite(n)?n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
 function view(name, push=true){
-  const valid=['home','gir','bili','bind','thompson','prem','oxygen','ppi']; if(!valid.includes(name)) name='home';
+  const valid=['home','gir','bili','bind','thompson','prem','oxygen','co','ppi']; if(!valid.includes(name)) name='home';
   document.querySelectorAll('.view').forEach(v=>{const active=v.id===name+'View';v.classList.toggle('active',active);v.setAttribute('aria-hidden',String(!active));});
   document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===name;b.classList.toggle('active',active);if(b.classList.contains('nav-item'))b.setAttribute('aria-current',active?'page':'false');});
   document.body.dataset.page=name;
@@ -221,3 +221,28 @@ if(oxygenForm){
  ['ppiGA','ppiPre','ppiPost'].forEach(id=>document.getElementById(id).addEventListener('input',render));
  chart('ppiPreChart','PPI Preduktal menurut Usia Gestasi',ppiData.pre,37,null);chart('ppiPostChart','PPI Postduktal menurut Usia Gestasi',ppiData.post,37,null);
 })();
+
+
+// Cardiac Output and Cardiac Index: LVOT/RVOT Doppler method.
+const coForm=$('coForm');
+if(coForm){
+ const num=id=>Number($(id).value);
+ const coFmt=(v,d=2)=>Number.isFinite(v)?v.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+ const classify=(v,lo,hi)=>v<lo?'Rendah':v>hi?'Tinggi':'Normal';
+ const metric=(label,value,unit)=>`<div class="metric"><span>${label}</span><strong>${coFmt(value)}</strong><small>${unit}</small></div>`;
+ coForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const weight=num('coWeight'),length=num('coLength'),hr=num('coHR');
+  const bsa=Math.sqrt(weight*length/3600);
+  const calc=(prefix,name)=>{
+   const d=num(prefix+'d'),vti=num(prefix+'vti'),csa=Math.PI*Math.pow(d/2,2),sv=csa*vti,co=sv*hr,coL=co/1000,ci=coL/bsa,coKg=co/weight,svKg=sv/weight;
+   return {name,d,vti,csa,sv,co,coL,ci,coKg,svKg,status:classify(ci,2.6,4.0)};
+  };
+  const lv=calc('coLV','Ventrikel kiri'),rv=calc('coRV','Ventrikel kanan');
+  const detail=x=>`<div class="result-detail"><h3>Cardiac Output ${x.name}</h3><div class="detail-row"><span>Diameter outflow tract</span><b>${coFmt(x.d)} cm</b></div><div class="detail-row"><span>CSA</span><b>${coFmt(x.csa,3)} cm²</b></div><div class="detail-row"><span>VTI</span><b>${coFmt(x.vti)} cm</b></div><div class="detail-row"><span>Stroke Volume</span><b>${coFmt(x.sv)} mL/denyut</b></div><div class="detail-row"><span>Stroke Volume terindeks berat</span><b>${coFmt(x.svKg)} mL/kg/denyut</b></div><div class="detail-row"><span>Cardiac Output</span><b>${coFmt(x.co)} mL/menit (${coFmt(x.coL)} L/menit)</b></div><div class="detail-row"><span>CO terindeks berat</span><b>${coFmt(x.coKg)} mL/kg/menit</b></div><div class="detail-row"><span>Cardiac Index</span><b>${coFmt(x.ci)} L/menit/m²</b></div><div class="detail-row"><span>Kesimpulan CI</span><b>${x.status}</b></div></div>`;
+  const overall=(lv.status==='Normal'&&rv.status==='Normal')?'Kedua CI berada dalam rentang referensi orientatif (Normal)':(lv.status===rv.status?`LV dan RV: ${lv.status}`:`Hasil LV dan RV berbeda; evaluasi klinis/ekokardiografi diperlukan`);
+  $('coResults').innerHTML=`<div class="result-hero"><div class="result-kicker">Hasil kalkulator • alat bantu klinis</div><h2>Cardiac Output • CI</h2><p>${overall}</p></div><div class="metric-grid">${metric('BSA',bsa,'m²')}${metric('Heart rate',hr,'kali/menit')}${metric('CO LV',lv.coL,'L/menit')}${metric('CI LV',lv.ci,'L/menit/m²')}${metric('CO RV',rv.coL,'L/menit')}${metric('CI RV',rv.ci,'L/menit/m²')}</div>${detail(lv)}${detail(rv)}<div class="warning-card"><b>Catatan:</b> Hasil perhitungan sangat bergantung pada akurasi diameter dan VTI. Karena diameter dikuadratkan dalam perhitungan CSA, kesalahan kecil pengukuran diameter dapat berdampak besar pada estimasi CO. Jangan gunakan kategori otomatis sebagai satu-satunya dasar keputusan klinis.</div>`;
+  $('coResults').hidden=false;$('coResults').scrollIntoView({behavior:'smooth',block:'start'});
+ });
+ coForm.addEventListener('reset',()=>setTimeout(()=>{$('coResults').hidden=true;$('coResults').innerHTML='';},0));
+}
