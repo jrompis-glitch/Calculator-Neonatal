@@ -56,3 +56,8 @@ Versi 1.2.9: input TSB/Bilirubin dan PaO₂ mendukung dua angka desimal; PaCO₂
 - Menghitung CSA, SV, CO (mL/menit dan L/menit), BSA Mosteller, CI, CO terindeks berat badan, serta SV terindeks berat badan.
 - Rentang interpretasi ditandai sebagai orientatif dan tidak menggantikan penilaian klinis/ekokardiografi.
 - Cache Service Worker dinaikkan ke v1.2.11.
+
+
+## Versi 1.2.12
+- Menambahkan kartu **Kalkulator PPI Neonatal** pada grid beranda agar dapat dibuka dari tampilan utama, selain melalui navigasi bawah.
+- Mempertahankan modul PPI, CO–CI, seluruh kalkulator lain, serta ikon PWA.
