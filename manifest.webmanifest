@@ -2,32 +2,43 @@
   "id": "./",
   "name": "Neonatal Clinical Calculator Perinatology Sam Ratulangi",
   "short_name": "Neonatal Calc",
-  "description": "Kalkulator GIR, hiperbilirubinemia AAP 2022, BIND-M, Thompson, bilirubin bayi prematur <35 minggu, dan pemantauan pertumbuhan Fenton 2025.",
+  "description": "Kalkulator klinis neonatus Perinatology Sam Ratulangi.",
   "lang": "id-ID",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait",
-  "background_color": "#f4f7fb",
+  "background_color": "#ffffff",
   "theme_color": "#12375b",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icons/jr-perinatology-logo.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

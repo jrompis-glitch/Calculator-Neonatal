@@ -2,7 +2,7 @@ document.querySelectorAll("[data-open-page]").forEach(el=>el.addEventListener("c
 let AAP=window.AAP2022Thresholds||{};
 const $=id=>document.getElementById(id);const fmt=(n,d=2)=>Number.isFinite(n)?n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
 function view(name, push=true){
-  const valid=['home','gir','bili','bind','thompson','prem','oxygen','ppi','coci']; if(!valid.includes(name)) name='home';
+  const valid=['home','gir','bili','bind','thompson','prem','oxygen','ppi']; if(!valid.includes(name)) name='home';
   document.querySelectorAll('.view').forEach(v=>{const active=v.id===name+'View';v.classList.toggle('active',active);v.setAttribute('aria-hidden',String(!active));});
   document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===name;b.classList.toggle('active',active);if(b.classList.contains('nav-item'))b.setAttribute('aria-current',active?'page':'false');});
   document.body.dataset.page=name;
@@ -220,28 +220,4 @@ if(oxygenForm){
  form.addEventListener('reset',()=>setTimeout(()=>{document.getElementById('ppiResults').hidden=true;document.getElementById('ppiResults').innerHTML='';chart('ppiPreChart','PPI Preduktal menurut Usia Gestasi',ppiData.pre,37,null);chart('ppiPostChart','PPI Postduktal menurut Usia Gestasi',ppiData.post,37,null);},0));
  ['ppiGA','ppiPre','ppiPost'].forEach(id=>document.getElementById(id).addEventListener('input',render));
  chart('ppiPreChart','PPI Preduktal menurut Usia Gestasi',ppiData.pre,37,null);chart('ppiPostChart','PPI Postduktal menurut Usia Gestasi',ppiData.post,37,null);
-})();
-
-
-/* CO-CI LV/RV calculator integration */
-(function(){
- const ids=['coWeight','coHeight','coHR','coLvD','coLvVti','coRvD','coRvVti'];
- const get=id=>{const el=document.getElementById(id);if(!el)return 0;const n=Number(el.value);return Number.isFinite(n)?n:0;};
- const out=(id,n)=>{const el=document.getElementById(id);if(el)el.textContent=Number.isFinite(n)?n.toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';};
- function status(id,value,min,max){const el=document.getElementById(id);if(!el)return;el.className='co-status';if(!Number.isFinite(value)){el.textContent='—';return;}if(value<min){el.textContent='Rendah';el.classList.add('co-low');}else if(value>max){el.textContent='Tinggi';el.classList.add('co-high');}else{el.textContent='Normal';el.classList.add('co-normal');}}
- function calcOne(prefix,dId,vtiId,w,hr,bsa){
-  const d=get(dId),vti=get(vtiId),csa=d>0?Math.PI*d*d/4:NaN,sv=Number.isFinite(csa)&&vti>0?csa*vti:NaN;
-  const svi=Number.isFinite(sv)&&w>0?sv/w:NaN,coMl=Number.isFinite(sv)&&hr>0?sv*hr:NaN,coL=Number.isFinite(coMl)?coMl/1000:NaN,coi=Number.isFinite(coMl)&&w>0?coMl/w:NaN,ci=Number.isFinite(coL)&&bsa>0?coL/bsa:NaN;
-  out(prefix+'Csa',csa);out(prefix+'Sv',sv);out(prefix+'Svi',svi);out(prefix+'Coml',coMl);out(prefix+'Col',coL);out(prefix+'Coi',coi);out(prefix+'Ci',ci);
-  return {svi,coi,ci};
- }
- function calculate(){
-  if(!document.getElementById('coWeight'))return;
-  const w=get('coWeight'),h=get('coHeight'),hr=get('coHR'),bsa=w>0&&h>0?Math.sqrt(w*h/3600):NaN;
-  document.getElementById('coBSA').value=Number.isFinite(bsa)?bsa.toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
-  const lv=calcOne('coLv','coLvD','coLvVti',w,hr,bsa),rv=calcOne('coRv','coRvD','coRvVti',w,hr,bsa);
-  status('coConLvCo',lv.coi,150,300);status('coConRvCo',rv.coi,150,300);status('coConLvSv',lv.svi,1.5,2.5);status('coConRvSv',rv.svi,1.5,2.5);status('coConLvCi',lv.ci,2.6,4);status('coConRvCi',rv.ci,2.6,4);
- }
- ids.forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',calculate);});
- calculate();
 })();
