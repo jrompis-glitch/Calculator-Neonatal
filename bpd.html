@@ -48,6 +48,20 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 7px;b
 .resultbox .big{font-size:21px;font-weight:800;color:var(--navy);margin:5px 0}
 .foot{font-size:11.5px;line-height:1.55;color:var(--muted);margin:12px 2px}
 @media(max-width:640px){.grid{grid-template-columns:1fr}.days{grid-template-columns:repeat(2,minmax(0,1fr))}.resultgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.tab{font-size:12px}}
+.bpd-menu{padding:20px}
+.bpd-menu>h2{background:var(--navy);color:#fff;margin:-20px -20px 18px;padding:16px 18px;border-radius:14px 14px 0 0}
+.menu-intro{font-size:14px;font-weight:750;margin:0 0 14px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.choice-card{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;padding:18px 16px;min-height:220px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+.choice-card:focus-visible{outline:3px solid #8bb9e2;outline-offset:2px}
+.choice-card:active{background:#edf4ff}
+.choice-card strong{font-size:20px;color:var(--navy);line-height:1.2}
+.choice-card>span:not(.choice-kicker){font-size:13px;color:var(--muted);line-height:1.5}
+.choice-kicker{font-size:10px;letter-spacing:1px;font-weight:850;color:#7790a6}
+.choice-link{margin-top:auto;color:var(--blue);font-size:13px}
+.bpd-back{margin:0 0 12px}
+[hidden]{display:none!important}
+@media(max-width:640px){.choice-grid{grid-template-columns:1fr}.choice-card{min-height:175px}}
 @media print{header,.tabs,.btnrow{display:none!important}body{background:white}.panel{display:block!important}.card{box-shadow:none;break-inside:avoid}}
 </style>
 </head>
@@ -55,12 +69,32 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 7px;b
 <header><div class="wrap head"><img src="./icons/icon-192.png" alt=""><div><h1>Kalkulator BPD</h1><p>Neonatal Clinical Calculator • Perinatology Sam Ratulangi</p></div></div></header>
 <div style="max-width:920px;margin:10px auto 0;padding:0 13px"><a href="./index.html" style="color:#12345a;text-decoration:none;font-weight:700;font-size:13px">← Kembali ke Neonatal Clinical Calculator</a></div>
 <main>
-<nav class="tabs" aria-label="Menu kalkulator">
-<button class="tab active" data-tab="nichd">BPD NICHD 2022</button>
+<section id="bpdMenu" class="card bpd-menu">
+  <h2>MENU KALKULATOR BPD</h2>
+  <p class="menu-intro">Pilih instrumen penilaian BPD yang akan digunakan.</p>
+  <div class="choice-grid">
+    <button class="choice-card" type="button" data-open-bpd="nichd">
+      <span class="choice-kicker">PREDIKSI PROBABILITAS</span>
+      <strong>BPD NICHD 2022</strong>
+      <span>Prediksi probabilitas No BPD, Grade 1, Grade 2, Grade 3, dan kematian berdasarkan data klinis hari ke-1, 3, 7, 14, dan 28.</span>
+      <b class="choice-link">Buka kalkulator →</b>
+    </button>
+    <button class="choice-card" type="button" data-open-bpd="jensen">
+      <span class="choice-kicker">KLASIFIKASI DERAJAT BPD</span>
+      <strong>BPD Jensen 2019</strong>
+      <span>Klasifikasi BPD berdasarkan jenis dukungan respirasi pada usia 36 minggu PMA.</span>
+      <b class="choice-link">Buka klasifikasi →</b>
+    </button>
+  </div>
+</section>
+
+<nav class="tabs" id="bpdTabs" aria-label="Menu kalkulator" hidden>
+<button class="tab" data-tab="nichd">BPD NICHD 2022</button>
 <button class="tab" data-tab="jensen">BPD Jensen 2019</button>
 </nav>
+<div id="bpdBack" class="bpd-back" hidden><button type="button" class="action secondary" id="backBpdMenu">← Kembali ke menu BPD</button></div>
 
-<section id="nichd" class="panel active">
+<section id="nichd" class="panel">
 <div class="card">
 <h2>A. Data dasar bayi – NICHD 2022</h2>
 <div class="grid">
@@ -211,10 +245,24 @@ function updateJensen(){
 ["j_ga","j_days","j_postnatal","j_support","j_flow","j_fio2"].forEach(id=>document.getElementById(id).addEventListener("input",updateJensen));
 document.getElementById("resetJensen").addEventListener("click",()=>{document.getElementById("j_ga").value=26;document.getElementById("j_days").value=0;document.getElementById("j_postnatal").value=70;document.getElementById("j_support").value="none";document.getElementById("j_flow").value=0;document.getElementById("j_fio2").value=21;updateJensen()});
 document.getElementById("printPage").addEventListener("click",()=>window.print());
-document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
-  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
-  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===btn.dataset.tab));
-}));
+function openBpdTool(id){
+  document.getElementById("bpdMenu").hidden=true;
+  document.getElementById("bpdTabs").hidden=false;
+  document.getElementById("bpdBack").hidden=false;
+  document.querySelectorAll(".tab[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));
+  document.querySelectorAll("section.panel").forEach(p=>p.classList.toggle("active",p.id===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showBpdMenu(){
+  document.getElementById("bpdMenu").hidden=false;
+  document.getElementById("bpdTabs").hidden=true;
+  document.getElementById("bpdBack").hidden=true;
+  document.querySelectorAll("section.panel").forEach(p=>p.classList.remove("active"));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-open-bpd]").forEach(btn=>btn.addEventListener("click",()=>openBpdTool(btn.dataset.openBpd)));
+document.querySelectorAll(".tab[data-tab]").forEach(btn=>btn.addEventListener("click",()=>openBpdTool(btn.dataset.tab)));
+document.getElementById("backBpdMenu").addEventListener("click",showBpdMenu);
 if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 updateJensen();
 </script>
