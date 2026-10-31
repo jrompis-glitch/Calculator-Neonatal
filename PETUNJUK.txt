@@ -1,20 +1,22 @@
-PATCH KALKULATOR BPD – JR NEONATAL CARE
+PERBAIKAN BERANDA BPD — 31 OKTOBER 2026
 
-Isi folder:
-- index.html: kartu BPD dipindahkan ke sebelah kartu PAIN pada beranda.
-- bpd.html: halaman BPD dengan menu pilihan NICHD 2022 atau Jensen 2019.
-- styles.css dan app.js: disertakan tanpa perubahan dari file yang Anda unggah.
+File di dalam ZIP:
+1. index.html — file beranda asli yang sudah ditambahkan kartu BPD tepat sebelum kartu PAIN.
+2. bpd.html — halaman pilihan BPD NICHD 2022 dan BPD Jensen 2019.
+3. styles.css dan app.js — salinan file sumber yang Anda unggah, tidak diubah.
+4. PETUNJUK.txt — petunjuk pemasangan.
 
-CARA MEMASANG DI PROYEK VERCEL/GITHUB
-1. Backup/unduh ZIP proyek yang sekarang terlebih dahulu.
-2. Buka folder utama (root) proyek, tempat index.html berada.
-3. Ganti index.html dan bpd.html dengan file dari folder patch ini.
-4. styles.css dan app.js boleh tetap; bila ingin seragam, file patch ini sama dengan file unggahan Anda.
-5. Commit/push ke GitHub atau upload ulang ke Vercel, lalu tunggu deployment selesai.
-6. Buka situs dan lakukan refresh penuh / hapus cache situs bila versi lama masih tampil.
+CARA MEMASANG:
+A. Backup/unduh proyek GitHub yang saat ini dipakai Vercel.
+B. Ekstrak ZIP ini.
+C. Pada folder ROOT proyek (folder yang sama dengan index.html, manifest.webmanifest, dan sw.js), ganti index.html dengan file dari ZIP.
+D. Letakkan bpd.html di folder ROOT yang sama. Jangan letakkan di subfolder.
+E. Jangan hapus file/folder lain seperti icons, manifest.webmanifest, sw.js, aap-data.js, scores.js, pain.html, dan halaman kalkulator lainnya.
+F. Commit/push perubahan ke branch yang terhubung ke Vercel. Pastikan deployment terbaru berstatus Ready/Production.
+G. Buka URL Vercel, lakukan refresh; jika masih versi lama, tutup tab/PWA lalu buka kembali atau bersihkan cache situs.
 
-PENTING
-- index.html tetap mengarah ke ./bpd.html.
-- Jangan menaruh bpd.html di dalam subfolder.
-- Folder icons, manifest.webmanifest, sw.js, aap-data.js, scores.js, serta file kalkulator lain yang sudah ada harus tetap dipertahankan.
-- Patch ini tidak mengubah rumus atau koefisien kalkulator NICHD/Jensen; hanya menambahkan menu pilihan dan mengatur posisi kartu BPD di beranda.
+PENTING:
+- Kartu BPD harus terlihat di beranda tepat sebelum PAIN.
+- Menekan kartu BPD membuka bpd.html.
+- Halaman bpd.html menampilkan pilihan NICHD 2022 dan Jensen 2019.
+- Jangan mengganti seluruh folder proyek dengan isi ZIP ini; ZIP ini adalah patch untuk file yang disebutkan.
