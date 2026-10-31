@@ -1,0 +1,20 @@
+PATCH KALKULATOR BPD – JR NEONATAL CARE
+
+Isi folder:
+- index.html: kartu BPD dipindahkan ke sebelah kartu PAIN pada beranda.
+- bpd.html: halaman BPD dengan menu pilihan NICHD 2022 atau Jensen 2019.
+- styles.css dan app.js: disertakan tanpa perubahan dari file yang Anda unggah.
+
+CARA MEMASANG DI PROYEK VERCEL/GITHUB
+1. Backup/unduh ZIP proyek yang sekarang terlebih dahulu.
+2. Buka folder utama (root) proyek, tempat index.html berada.
+3. Ganti index.html dan bpd.html dengan file dari folder patch ini.
+4. styles.css dan app.js boleh tetap; bila ingin seragam, file patch ini sama dengan file unggahan Anda.
+5. Commit/push ke GitHub atau upload ulang ke Vercel, lalu tunggu deployment selesai.
+6. Buka situs dan lakukan refresh penuh / hapus cache situs bila versi lama masih tampil.
+
+PENTING
+- index.html tetap mengarah ke ./bpd.html.
+- Jangan menaruh bpd.html di dalam subfolder.
+- Folder icons, manifest.webmanifest, sw.js, aap-data.js, scores.js, serta file kalkulator lain yang sudah ada harus tetap dipertahankan.
+- Patch ini tidak mengubah rumus atau koefisien kalkulator NICHD/Jensen; hanya menambahkan menu pilihan dan mengatur posisi kartu BPD di beranda.
