@@ -1,6 +1,1 @@
-PATCH SEMENTARA BPD + NAVIGASI
-1. Backup repositori GitHub sebelum mengganti file.
-2. Unggah index.html, bpd.html, styles.css, sw.js ke root repo.
-3. File CO-CI BELUM ditambahkan karena kode kalkulator CO-CI tidak ada dalam 3 file yang baru diunggah. Mohon kirim file versi terakhir yang memiliki CO-CI berfungsi.
-4. Setelah deploy Ready, uji BPD, menu bawah, kalkulator lain, dan refresh browser.
-5. Jangan hapus app.js atau file lain.
+Unggah index.html ke root GitHub Calculator-Neonatal menggantikan file lama. app.js disertakan untuk memastikan rumus CO-CI tersedia; unggah jika file app.js di GitHub tidak mengandung coForm. Jangan hapus file lain. Setelah commit, tunggu Vercel Ready dan refresh.
