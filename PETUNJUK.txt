@@ -1,22 +1,6 @@
-PERBAIKAN BERANDA BPD — 31 OKTOBER 2026
-
-File di dalam ZIP:
-1. index.html — file beranda asli yang sudah ditambahkan kartu BPD tepat sebelum kartu PAIN.
-2. bpd.html — halaman pilihan BPD NICHD 2022 dan BPD Jensen 2019.
-3. styles.css dan app.js — salinan file sumber yang Anda unggah, tidak diubah.
-4. PETUNJUK.txt — petunjuk pemasangan.
-
-CARA MEMASANG:
-A. Backup/unduh proyek GitHub yang saat ini dipakai Vercel.
-B. Ekstrak ZIP ini.
-C. Pada folder ROOT proyek (folder yang sama dengan index.html, manifest.webmanifest, dan sw.js), ganti index.html dengan file dari ZIP.
-D. Letakkan bpd.html di folder ROOT yang sama. Jangan letakkan di subfolder.
-E. Jangan hapus file/folder lain seperti icons, manifest.webmanifest, sw.js, aap-data.js, scores.js, pain.html, dan halaman kalkulator lainnya.
-F. Commit/push perubahan ke branch yang terhubung ke Vercel. Pastikan deployment terbaru berstatus Ready/Production.
-G. Buka URL Vercel, lakukan refresh; jika masih versi lama, tutup tab/PWA lalu buka kembali atau bersihkan cache situs.
-
-PENTING:
-- Kartu BPD harus terlihat di beranda tepat sebelum PAIN.
-- Menekan kartu BPD membuka bpd.html.
-- Halaman bpd.html menampilkan pilihan NICHD 2022 dan Jensen 2019.
-- Jangan mengganti seluruh folder proyek dengan isi ZIP ini; ZIP ini adalah patch untuk file yang disebutkan.
+PATCH SEMENTARA BPD + NAVIGASI
+1. Backup repositori GitHub sebelum mengganti file.
+2. Unggah index.html, bpd.html, styles.css, sw.js ke root repo.
+3. File CO-CI BELUM ditambahkan karena kode kalkulator CO-CI tidak ada dalam 3 file yang baru diunggah. Mohon kirim file versi terakhir yang memiliki CO-CI berfungsi.
+4. Setelah deploy Ready, uji BPD, menu bawah, kalkulator lain, dan refresh browser.
+5. Jangan hapus app.js atau file lain.
