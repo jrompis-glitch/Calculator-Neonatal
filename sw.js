@@ -4,12 +4,15 @@
  * mengambil versi terbaru dari server saat online.
  */
 
-const CACHE = 'neonatal-clinical-calculator-v1-17';
+const CACHE = 'neonatal-clinical-calculator-letarte-20261102-1';
 
 const ASSETS = [
   './',
   './index.html',
   './bpd.html',
+  './eos.html',
+  './letarte.html',
+  './jr-perinatology-logo.png',
   './pain.html',
   './finnegan.html',
   './fenton.html',

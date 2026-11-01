@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Neonatal Clinical Calculator Perinatology Sam Ratulangi",
   "short_name": "Neonatal Calc",
-  "description": "Kalkulator klinis neonatus: GIR, AAP 2022, BIND-M, Thompson, Fenton 2025, PPI, Oxygen Index, PAIN, Finnegan, dan BPD NICHD 2022/Jensen 2019.",
+  "description": "Kalkulator klinis neonatal dengan GIR, bilirubin, BIND-M, Thompson, Fenton, PAIN, Finnegan, OI, PPI, CO-CI, BPD, EOS dan Indeks Letarte.",
   "lang": "id-ID",
   "start_url": "./index.html",
   "scope": "./",

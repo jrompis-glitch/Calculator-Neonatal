@@ -1,0 +1,15 @@
+UPDATE NEONATAL CLINICAL CALCULATOR — INDEKS LETARTE
+
+Paket lengkap dirakit dari paket dasar PPI, patch BPD, pembaruan CO-CI/copyright, integrasi EOS, dan perbaikan navigasi Finnegan/PAIN yang tersedia.
+
+UNGGAH
+1. Ekstrak ZIP.
+2. Unggah seluruh isi folder hasil ekstrak ke root repositori GitHub yang terhubung ke Vercel (index.html harus di root). Sertakan folder icons.
+3. Pertahankan pengaturan Vercel statis yang sebelumnya berfungsi. Tidak perlu build atau API baru.
+4. Setelah deployment selesai, buka aplikasi dengan internet, tutup lalu buka kembali bila menu baru belum terlihat. Service worker memiliki versi cache baru.
+
+LETARTE
+Menu tersedia pada kartu beranda dan navigasi bawah. Sepuluh komponen, maksimum 13. Total >4 menimbulkan kecurigaan hipotiroid; tepat 4 tidak melewati batas. Skor rendah tidak menyingkirkan penyakit; konfirmasi TSH/FT4.
+
+Kalkulasi lama tidak diubah. Pengujian dilakukan pada struktur berkas, tautan lokal, sintaks JavaScript, dan 1024 kombinasi Letarte. Belum diuji melalui deployment Vercel langsung atau antarmuka browser.
+Produced by Johnny Rompis
